@@ -1,0 +1,32 @@
+{
+  "name": "@aleksrutins/butterfly",
+  "version": "0.1.0",
+  "description": "Dead simple database migrations",
+  "main": "dist/cli.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup src/cli.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aleksrutins/butterfly.git"
+  },
+  "author": "Aleks Rutins <aleks@rutins.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aleksrutins/butterfly/issues"
+  },
+  "homepage": "https://github.com/aleksrutins/butterfly#readme",
+  "devDependencies": {
+    "@tsconfig/strictest": "^2.0.1",
+    "@types/pg": "^8.10.2",
+    "tsup": "^7.1.0"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "pg": "^8.11.1",
+    "sqlite3": "^5.1.6"
+  },
+  "bin": "dist/cli.mjs",
+  "files": []
+}
