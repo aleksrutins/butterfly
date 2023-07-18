@@ -5,9 +5,9 @@ export function info(msg: string) {
 }
 
 export function warn(msg: string) {
-    console.info(colors.bgYellow(' WARN '), msg);
+    console.warn(colors.bgYellow(' WARN '), msg);
 }
 
 export function error(msg: string) {
-    console.info(colors.bgRed(' ERR  '), msg);
+    console.error(colors.bgRed(' ERR  '), msg);
 }
