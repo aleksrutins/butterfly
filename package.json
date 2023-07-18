@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "description": "Dead simple database migrations",
   "main": "dist/index.mjs",
+  "types": "dist/index.d.mts",
   "scripts": {
     "test": "jest",
     "build": "tsup",

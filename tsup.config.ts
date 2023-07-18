@@ -5,5 +5,6 @@ export default defineConfig({
     target: 'node20',
     format: 'esm',
     minify: true,
-    minifyIdentifiers: true
+    minifyIdentifiers: true,
+    dts: true
 })
