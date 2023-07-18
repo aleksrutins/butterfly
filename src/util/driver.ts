@@ -2,8 +2,10 @@ export default abstract class Driver<DB> {
     protected client!: DB;
 
     abstract connect(connStr: string): Promise<DB>;
-    abstract exec(sql: string, ...params: string[]): Promise<void>
-    abstract query<T>(sql: string, ...params: string[]): Promise<T[]>
+    abstract exec(sql: string, params: any[]): Promise<void>
+    abstract query<T>(sql: string, params: any[]): Promise<T[]>
+
+    abstract parseQueryTemplate(strings: TemplateStringsArray, ...params: any[]): [string, any[]];
 
     async destroy(): Promise<void> {}
 
@@ -11,5 +13,13 @@ export default abstract class Driver<DB> {
 
     async init() {
         this.client = await this.connect(this.connStr);
+    }
+
+    q<T>(strings: TemplateStringsArray, ...params: any[]): Promise<T[]> {
+        return this.query<T>(...this.parseQueryTemplate(strings, ...params));
+    }
+
+    e(strings: TemplateStringsArray, ...params: any[]): Promise<void> {
+        return this.exec(...this.parseQueryTemplate(strings, ...params));
     }
 }
