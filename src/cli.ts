@@ -6,37 +6,46 @@ import { driverForURI } from './driver/all';
 import * as log from './util/log';
 import { ensureMigrationsTable } from './util/tracker';
 
-if(process.argv[0]?.endsWith('node')) process.argv.shift();
+let driver = null;
 
-log.info("Connecting to database...");
+try {
+    if (process.argv[0]?.endsWith('node')) process.argv.shift();
 
-const url = process.env['DATABASE_URL'];
+    log.info("Connecting to database...");
 
-if(!url) {
-    log.error("DATABASE_URL was not provided, exiting.");
-    process.exit(1);
-}
+    const url = process.env['DATABASE_URL'];
 
-const driver = driverForURI(url);
+    if (!url) {
+        throw "DATABASE_URL was not provided, exiting.";
+    }
 
-if(!driver) {
-    log.error("Unsupported protocol: " + (url ?? "").split(":")[0]);
-    process.exit(1);
-}
+    driver = driverForURI(url);
+    await driver?.init();
 
-log.info("Ensuring migrations table exists...");
-await ensureMigrationsTable(driver);
+    if (!driver) {
+        throw "Unsupported protocol: " + (url ?? "").split(":")[0];
+    }
 
-switch(process.argv[1]) {
-    case 'up':
-        await up(driver);
-        break;
-    case 'revert':
-        await revert(driver);
-        break;
-    case 'refresh':
-        await refresh(driver);
-        break;
-    default:
-        log.error(`Unknown command: ${process.argv[1]}. Available commands are up, revert, refresh`);
+    log.info("Ensuring migrations table exists...");
+    await ensureMigrationsTable(driver);
+
+    switch (process.argv[1]) {
+        case 'up':
+            await up(driver);
+            break;
+        case 'revert':
+            await revert(driver);
+            break;
+        case 'refresh':
+            await refresh(driver);
+            break;
+        default:
+            throw `Unknown command: ${process.argv[1]}. Available commands are up, revert, refresh`;
+    }
+} catch(e: any) {
+    if('message' in e) log.error(e.message.toString());
+    else log.error(e.toString());
+    if('printStackTrace' in e && typeof e['printStackTrace'] == 'function') e.printStackTrace();
+} finally {
+    driver?.destroy();
 }

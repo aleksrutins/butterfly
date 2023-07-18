@@ -1,11 +1,15 @@
 export default abstract class Driver<DB> {
-    protected client: DB;
+    protected client!: DB;
 
-    abstract connect(connStr: string): DB;
+    abstract connect(connStr: string): Promise<DB>;
     abstract exec(sql: string, ...params: string[]): Promise<void>
     abstract query<T>(sql: string, ...params: string[]): Promise<T[]>
 
-    constructor(protected connStr: string) {
-        this.client = this.connect(connStr);
+    async destroy(): Promise<void> {}
+
+    constructor(protected connStr: string) {}
+
+    async init() {
+        this.client = await this.connect(this.connStr);
     }
 }

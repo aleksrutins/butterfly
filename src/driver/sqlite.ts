@@ -3,7 +3,7 @@ import Driver from '../util/driver';
 const sqlite = sqlite3.verbose();
 
 export default class Sqlite3Driver extends Driver<sqlite3.Database> {
-    override connect(connStr: string): sqlite3.Database {
+    override async connect(connStr: string): Promise<sqlite3.Database> {
         return new sqlite.Database(connStr.split(':').slice(1).join(':'));
     }
     override exec(sql: string, ...params: string[]): Promise<void> {
