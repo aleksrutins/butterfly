@@ -1,8 +1,26 @@
 {
-    "extends": "@tsconfig/strictest/tsconfig.json",
     "compilerOptions": {
-        "target": "ES2022",
-        "module": "ES2022",
-        "moduleResolution": "node"
-    }
-}
+      "strict": true,
+      "allowUnusedLabels": false,
+      "allowUnreachableCode": false,
+      "exactOptionalPropertyTypes": true,
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitOverride": true,
+      "noImplicitReturns": true,
+      "noPropertyAccessFromIndexSignature": true,
+      "noUncheckedIndexedAccess": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+  
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "target": "ES2022",
+      "module": "ES2022",
+      "moduleResolution": "node"
+    },
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Strictest",
+    "_version": "2.0.0"
+  }
+  

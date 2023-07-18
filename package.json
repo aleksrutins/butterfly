@@ -5,7 +5,8 @@
   "main": "dist/cli.mjs",
   "scripts": {
     "test": "jest",
-    "build": "tsup src/cli.ts"
+    "build": "tsup src/cli.ts",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,6 @@
   },
   "homepage": "https://github.com/aleksrutins/butterfly#readme",
   "devDependencies": {
-    "@tsconfig/strictest": "^2.0.1",
     "@types/jest": "^29.5.3",
     "@types/mysql": "^2.15.21",
     "@types/pg": "^8.10.2",

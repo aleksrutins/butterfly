@@ -15,6 +15,6 @@ export default async function revert(conn: Driver<any>) {
 
     log.info("Reverting migration " + latestMigration);
     const sql = fs.readFileSync(`migrations/${latestMigration}.down.sql`).toString();
-    await conn.exec(sql);
+    await conn.exec(sql, []);
     await untrackMigration(conn, latestMigration);
 }

@@ -26,7 +26,7 @@ export default async function up(conn: Driver<any>) {
         log.info("Running migration " + migrationName);
         const fileName = migrationName + ".up.sql";
         const sql = (await fs.readFile("migrations/" + fileName)).toString();
-        await conn.exec(sql);
+        await conn.exec(sql, []);
         await trackMigration(conn, migrationName);
     }
 }
