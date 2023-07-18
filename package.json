@@ -2,10 +2,10 @@
   "name": "@aleksrutins/butterfly",
   "version": "0.2.0",
   "description": "Dead simple database migrations",
-  "main": "dist/cli.mjs",
+  "main": "dist/index.mjs",
   "scripts": {
     "test": "jest",
-    "build": "tsup src/cli.ts",
+    "build": "tsup",
     "typecheck": "tsc --noEmit"
   },
   "repository": {
@@ -33,5 +33,5 @@
     "sqlite3": "^5.1.6"
   },
   "bin": "dist/cli.mjs",
-  "files": []
+  "files": ["dist/**/*"]
 }

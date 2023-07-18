@@ -1,5 +1,5 @@
 # Butterfly
-> Dead-simple database migrations
+> Idiotically simple cross-database queries and migrations
 
 ## Usage
 To create a migration, add `<migration-name>.up.sql` and `<migration-name>.down.sql` files in a `migrations` directory. Write your SQL for applying and reverting the migration in those files, respectively.
