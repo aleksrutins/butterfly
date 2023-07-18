@@ -43,9 +43,9 @@ try {
             throw `Unknown command: ${process.argv[1]}. Available commands are up, revert, refresh`;
     }
 } catch(e: any) {
-    if('message' in e) log.error(e.message.toString());
+    if(typeof e == 'object' && 'message' in e) log.error(e.message.toString());
     else log.error(e.toString());
-    if('printStackTrace' in e && typeof e['printStackTrace'] == 'function') e.printStackTrace();
+    if(typeof e == 'object' && 'printStackTrace' in e && typeof e['printStackTrace'] == 'function') e.printStackTrace();
 } finally {
     driver?.destroy();
 }
