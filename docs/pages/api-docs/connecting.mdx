@@ -1,0 +1,9 @@
+# Connecting
+
+To connect to a database, use the `connect(connectionURL)` method. For a list of supported protocols, reference the [supported databases](/supported-databases).
+
+```ts
+declare function connect(connectionURL: string): Driver<any>;
+```
+
+This function returns the [`Driver`](driver) for the URI provided.

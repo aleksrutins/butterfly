@@ -1,0 +1,11 @@
+# Querying
+
+There are two ways to query your database with Butterfly: you can either use the `query<T>` (returning a value) or `exec` (not returning a value) methods, or you can use the `q<T>` and `e` template tags. The two statements below do the exact same thing:
+```ts
+db.exec('INSERT INTO todos (content) VALUES (?)', [myContent]);
+db.e`INSERT INTO todos (content) VALUES (${myContent})`;
+```
+There are three main advantages to using `q` and `e` over `query` and `exec`:
+1. They're shorter and easier to read.
+2. They protect from SQL injection without you, the programmer, having to worry about it.
+3. They're database-independent &mdash; for instance, although SQLite uses `?` and PostgreSQL uses `$<number>` for parameters, you can use the same `q` or `e` call for either, while you would have to use two separate `query` or `exec` calls.
