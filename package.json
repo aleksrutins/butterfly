@@ -1,6 +1,6 @@
 {
   "name": "@aleksrutins/butterfly",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Dead simple database migrations",
   "main": "dist/index.mjs",
   "types": "dist/index.d.mts",
@@ -34,5 +34,7 @@
     "sqlite3": "^5.1.6"
   },
   "bin": "dist/cli.mjs",
-  "files": ["dist/**/*"]
+  "files": [
+    "dist/**/*"
+  ]
 }
