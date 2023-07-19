@@ -22,5 +22,10 @@ export default class Sqlite3Driver extends Driver<sqlite3.Database> {
             });
         });
     }
+
+    override destroy(): Promise<void> {
+        return new Promise((resolve, reject) =>
+            this.client.close(err => err ? reject(err) : resolve()));
+    }
     
 }

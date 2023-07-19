@@ -1,0 +1,5 @@
+{
+    "postgres": "PostgreSQL",
+    "sqlite": "SQLite",
+    "mysql": "MySQL"
+}
