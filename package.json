@@ -31,7 +31,8 @@
     "colors": "^1.4.0",
     "mysql": "^2.18.1",
     "pg": "^8.11.1",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "surrealdb.js": "^0.8.3"
   },
   "bin": "dist/cli.mjs",
   "files": [

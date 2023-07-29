@@ -2,6 +2,7 @@ import { driverForURI } from "./all"
 import MySQLDriver from "./mysql";
 import PostgresDriver from "./postgres"
 import Sqlite3Driver from "./sqlite";
+import SurrealDriver from "./surreal";
 
 describe('driver detection', () => {
     it('correctly detects PostgreSQL', () => {
@@ -12,5 +13,8 @@ describe('driver detection', () => {
     })
     it('correctly detects MySQL', () => {
         expect(driverForURI("mysql://localhost:3306/db")).toBeInstanceOf(MySQLDriver);
+    })
+    it('correctly detects SurrealDB', () => {
+        expect(driverForURI("https://cloud.surrealdb.com/rpc")).toBeInstanceOf(SurrealDriver);
     })
 })
