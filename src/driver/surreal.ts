@@ -3,12 +3,11 @@ import Driver from "../util/driver";
 import { RawQueryResult } from "surrealdb.js/script/types";
 
 export default class SurrealDriver extends Driver<Surreal, RawQueryResult> {
-
     override parseQueryTemplate(strings: TemplateStringsArray, ...params: any[]): [string, any[]] {
-        if(strings.length == 0) return ['', []];
+        if (strings.length == 0) return ['', []];
 
         let result = strings[0] ?? '';
-        for(let i = 0; i < params.length; i++) {
+        for (let i = 0; i < params.length; i++) {
             result += '$' + i + strings[i + 1];
         }
 
@@ -20,18 +19,19 @@ export default class SurrealDriver extends Driver<Surreal, RawQueryResult> {
     }
 
     async scope(params: Record<string, unknown>) {
-        await this.client.connect(this.connStr, params);
+        this.client.connect(this.connStr, params);
     }
 
     override async query<T extends RawQueryResult>(sql: string, params: any[]): Promise<T[]> {
         let newParams: Record<string, string> = {};
-        for(const paramID in params) {
+        for (const paramID in params) {
             newParams[paramID.toString()] = params[paramID];
         }
         const result = await this.client.query<T[][]>(sql, newParams);
-        return result[result.length-1]?.result ?? [];
+        return result[result.length - 1]?.result ?? [];
     }
-    override exec(sql: string, params: any[]): Promise<void> {
-        return this.query(sql, params) as unknown as Promise<void>;
+
+    override async exec(sql: string, params: any[]) {
+        await this.query(sql, params)
     }
 }
