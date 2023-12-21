@@ -28,7 +28,7 @@ jobs:
           node_modules
         # An explicit key for restoring and saving the cache
         key: ${{ runner.os }}-deps
-          
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -36,4 +36,5 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build
+    - run: npm run lint
     - run: npm test
