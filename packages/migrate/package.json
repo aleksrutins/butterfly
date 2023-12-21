@@ -1,0 +1,14 @@
+{
+  "name": "@butterflyjs/migrate",
+  "version": "0.0.1",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "tslib": "^2.3.0"
+  },
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "bin": {
+    "butterfly": "./src/cli.js"
+  },
+  "typings": "./src/index.d.ts"
+}
