@@ -10,6 +10,7 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
+  "workspaces": ["packages/*"],
   "devDependencies": {
     "@nx/eslint": "17.2.6",
     "@nx/eslint-plugin": "17.2.6",
