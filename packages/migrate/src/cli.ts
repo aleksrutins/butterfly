@@ -20,7 +20,7 @@ try {
         throw "DATABASE_URL was not provided, exiting.";
     }
 
-    const lib = butterfly([LibSQLDriver]);
+    const lib = butterfly(LibSQLDriver);
     if (!lib.supportsURI(url)) {
         throw "Unsupported protocol: " + (url ?? "").split(":")[0];
     }
