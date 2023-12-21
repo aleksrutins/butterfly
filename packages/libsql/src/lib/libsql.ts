@@ -1,12 +1,15 @@
 import { Driver } from '@butterflyjs/core';
-import { Client, createClient } from '@libsql/client/.';
+import { Client, InValue, createClient } from '@libsql/client';
 import { zip } from './zip';
 
-export const LibSQLDriver: Driver<Client> = {
-    name: 'libsql',
-    protocols: ['libsql:', 'file:', 'http:', 'https:', 'ws:', 'wss:'],
+const name = 'libsql' as const;
+const protocols = ['libsql:', 'file:', 'http:', 'https:', 'ws:', 'wss:'] as const;
 
-    parseQueryTemplate(strings: TemplateStringsArray, ...params: any[]): [string, any[]] {
+export const LibSQLDriver: Driver<Client, typeof name, typeof protocols, string, '?', object, InValue> = {
+    name,
+    protocols,
+
+    parseQueryTemplate(strings, ...params) {
         return [strings.join('?'), params];
     },
 

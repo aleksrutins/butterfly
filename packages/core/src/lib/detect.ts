@@ -1,18 +1,23 @@
-import { expect } from "../util/invariant";
-import { Driver, canConnect, createDriver } from "./driver";
+import { invariant } from '../util/invariant';
+import { AnyDriver, SupportedURI, canConnect, createDriver, DriverForURI } from './driver';
 
-let registeredDrivers: Set<Driver<any>> = new Set();
+export function butterfly<Drivers extends readonly AnyDriver[]>(...drivers: Drivers) {
+    return {
+        addDriver<NewDrivers extends readonly AnyDriver[]>(newDrivers: NewDrivers) {
+            return butterfly(...drivers, ...newDrivers)
+        },
 
-export function register(...drivers: Driver<any>[]) {
-    registeredDrivers = new Set([...registeredDrivers, ...drivers]);
-}
-
-export function unregister(...drivers: Driver<any>[]) {
-    for (const driver of drivers) {
-        registeredDrivers.delete(driver);
-    }
-}
-
-export function driverForURI(uri: string): Driver<any> {
-    return expect([...registeredDrivers].find(d => canConnect(d, uri)), `failed to find a driver for ${uri} - did you forget to call register()?`);
+        supportsURI(uri: string): uri is SupportedURI<Drivers[number]> {
+            return drivers.find(d => canConnect(d, uri)) != null;
+        },
+        driverForURI<URI extends SupportedURI<Drivers[number]>>(uri: URI) {
+            const foundDriver = drivers.find((d) => canConnect(d, uri));
+            invariant(foundDriver, `no driver found for ${uri}`)
+            invariant(canConnect(foundDriver, uri), `driver ${foundDriver.name} found, but cannot connect to ${uri} - this is most likely a bug, please submit a report at https://github.com/aleksrutins/butterfly/issues`);
+            return foundDriver as unknown as DriverForURI<Drivers[number], URI>;
+        },
+        connect<URI extends SupportedURI<Drivers[number]>>(uri: URI) {
+            return createDriver(this.driverForURI(uri), uri);
+        }
+    };
 }

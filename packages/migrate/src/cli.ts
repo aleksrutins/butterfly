@@ -1,10 +1,11 @@
 #!/usr/bin/env node
+import { butterfly } from '@butterflyjs/core';
 import refresh from './cmd/refresh';
 import revert from './cmd/revert';
 import up from './cmd/up';
-import { connect } from '@butterflyjs/core'
 import * as log from './util/log';
 import { ensureMigrationsTable } from './util/tracker';
+import { LibSQLDriver } from '@butterflyjs/libsql';
 
 let conn = null;
 
@@ -19,11 +20,12 @@ try {
         throw "DATABASE_URL was not provided, exiting.";
     }
 
-    conn = connect(url);
-
-    if (!conn) {
+    const lib = butterfly([LibSQLDriver]);
+    if (!lib.supportsURI(url)) {
         throw "Unsupported protocol: " + (url ?? "").split(":")[0];
     }
+
+    conn = lib.connect(url);
 
     log.info("Ensuring migrations table exists...");
     await ensureMigrationsTable(conn);
@@ -41,6 +43,7 @@ try {
         default:
             throw `Unknown command: ${process.argv[1]}. Available commands are up, revert, refresh`;
     }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 } catch(e: any) {
     if(typeof e == 'object' && 'message' in e) log.error(e.message.toString());
     else log.error(e.toString());

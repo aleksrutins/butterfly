@@ -1,6 +1,6 @@
 import * as fs from 'fs/promises'
 
-import { Driver, DriverInstance } from '@butterflyjs/core';
+import { AnyDriver, DriverInstance } from '@butterflyjs/core';
 import { getTrackedMigrations, trackMigration } from "../util/tracker";
 import * as log from '../util/log';
 
@@ -14,7 +14,7 @@ function getMigrationName(filename: string) {
     return filename;
 }
 
-export default async function up(conn: DriverInstance) {
+export default async function up(conn: DriverInstance<AnyDriver>) {
     const migrations = await getTrackedMigrations(conn);
     const actualMigrations = new Set(
         (await fs.readdir("migrations")).map(

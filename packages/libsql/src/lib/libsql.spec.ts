@@ -1,4 +1,4 @@
-import { driverForURI, register } from '@butterflyjs/core';
+import { butterfly } from '@butterflyjs/core';
 import { LibSQLDriver } from './libsql';
 
 describe('libsql driver', () => {
@@ -8,10 +8,10 @@ describe('libsql driver', () => {
     })
 
     it('can be detected', () => {
-        register(LibSQLDriver)
+        const lib = butterfly(LibSQLDriver);
 
         for(const protocol of LibSQLDriver.protocols) {
-            expect(driverForURI(`${protocol}test`)).toBe(LibSQLDriver)
+            expect(lib.driverForURI(`${protocol}test`)).toBe(LibSQLDriver)
         }
     })
 })
